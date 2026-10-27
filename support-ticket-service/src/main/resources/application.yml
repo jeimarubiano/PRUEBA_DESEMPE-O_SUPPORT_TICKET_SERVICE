@@ -1,0 +1,30 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: support-ticket-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:h2:mem:helpflow;MODE=PostgreSQL;DB_CLOSE_DELAY=-1}
+    username: ${SPRING_DATASOURCE_USERNAME:sa}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
+info:
+  app:
+    name: HelpFlow Support Ticket Service
+    version: 1.0.0
+
