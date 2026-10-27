@@ -19,6 +19,8 @@ flowchart LR
 
 El servicio central separa adaptadores REST y JPA de los casos de uso. Las operaciones de asignación e historial se ejecutan en una transacción.
 
+El detalle de la arquitectura hexagonal y el ciclo de vida está en [docs/architecture.md](docs/architecture.md).
+
 ## Seguridad y roles
 
 `POST /auth/register` registra un usuario activo. `POST /auth/login` devuelve un JWT Bearer. Los endpoints de tickets requieren el encabezado `Authorization: Bearer <token>`.
@@ -87,4 +89,13 @@ mvn test
 ```
 
 Las pruebas de integración usan H2 y Flyway. La prueba `PostgresContainerIntegrationTest` emplea Testcontainers con PostgreSQL y se ejecuta automáticamente cuando Docker está disponible; en equipos sin Docker se omite de forma segura.
+
+## Demostración y documentación de entrega
+
+- [Guía de verificación, pruebas y evidencias](docs/verification-guide.md)
+- [Diagrama de arquitectura hexagonal y ciclo de vida](docs/architecture.md)
+- [Colección Postman](docs/postman/HelpFlow.postman_collection.json)
+- Swagger/OpenAPI: `http://localhost:8080/swagger-ui.html`
+
+La guía indica exactamente qué capturas tomar para demostrar Docker, pruebas, portal, Swagger y Actuator, evitando incluir contraseñas o tokens en la entrega.
 
