@@ -26,6 +26,8 @@ services:
       dockerfile: support-ticket-service/Dockerfile
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/helpflow
+      SPRING_DATASOURCE_USERNAME: helpflow
+      SPRING_DATASOURCE_PASSWORD: helpflow
       DISPATCH_BASE_URL: http://technician-dispatch-service:8081
     ports:
       - "8080:8080"
