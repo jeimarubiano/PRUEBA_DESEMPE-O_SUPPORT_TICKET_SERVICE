@@ -76,3 +76,11 @@ Una vez iniciados los servicios:
 - Actuator: `http://localhost:8080/actuator/health`
 - Swagger UI: `http://localhost:8080/swagger-ui.html`
 
+## Pruebas
+
+```bash
+mvn test
+```
+
+Las pruebas de integración usan H2 y Flyway. La prueba `PostgresContainerIntegrationTest` emplea Testcontainers con PostgreSQL y se ejecuta automáticamente cuando Docker está disponible; en equipos sin Docker se omite de forma segura.
+
