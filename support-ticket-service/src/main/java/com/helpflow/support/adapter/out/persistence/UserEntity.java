@@ -32,4 +32,5 @@ public class UserEntity {
     public String getEmail() { return email; }
     public PersonStatus getStatus() { return status; }
     public String getRole() { return role; }
+    public String getPasswordHash() { return passwordHash; }
 }

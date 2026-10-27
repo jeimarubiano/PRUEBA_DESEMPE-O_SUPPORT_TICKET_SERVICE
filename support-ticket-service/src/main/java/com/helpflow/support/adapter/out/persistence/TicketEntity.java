@@ -19,4 +19,13 @@ public class TicketEntity {
     @Column(nullable=false) private Instant createdAt;
     @Column(nullable=false) private Instant slaDueAt;
     protected TicketEntity() { }
+    public TicketEntity(UserEntity requester, String title, String description, TicketCategory category, TicketPriority priority, String site, String affectedAsset, Instant slaDueAt) {
+        this.requester=requester; this.title=title; this.description=description; this.category=category; this.priority=priority; this.site=site; this.affectedAsset=affectedAsset;
+        this.status=TicketStatus.ABIERTO; this.createdAt=Instant.now(); this.slaDueAt=slaDueAt;
+    }
+    public Long getId() { return id; } public TicketStatus getStatus() { return status; }
+    public TicketCategory getCategory() { return category; } public TicketPriority getPriority() { return priority; }
+    public Instant getSlaDueAt() { return slaDueAt; } public String getTitle() { return title; }
+    public UserEntity getRequester() { return requester; }
+    public void changeStatus(TicketStatus next) { this.status=next; }
 }

@@ -27,4 +27,8 @@ info:
   app:
     name: HelpFlow Support Ticket Service
     version: 1.0.0
+app:
+  jwt:
+    secret: ${JWT_SECRET:helpflow-development-secret-change-before-production-2026}
+    expiration-minutes: 120
 
