@@ -13,15 +13,18 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import com.helpflow.support.application.TicketAssignmentService;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 
 @RestController @RequestMapping("/tickets")
 public class TicketController {
- private final TicketRepository tickets; private final UserRepository users; private final TicketAssignmentService assignment;
- public TicketController(TicketRepository tickets, UserRepository users, TicketAssignmentService assignment) { this.tickets=tickets; this.users=users; this.assignment=assignment; }
+ private final TicketRepository tickets; private final UserRepository users; private final TicketAssignmentService assignment; private final MeterRegistry metrics;
+ public TicketController(TicketRepository tickets, UserRepository users, TicketAssignmentService assignment, MeterRegistry metrics) { this.tickets=tickets; this.users=users; this.assignment=assignment; this.metrics=metrics; }
  @PostMapping @ResponseStatus(HttpStatus.CREATED) @Transactional
  public TicketResponse create(@Valid @RequestBody CreateTicketRequest r, Authentication auth) {
    var requester=users.findByEmail(auth.getName()).filter(u->u.getStatus()==PersonStatus.ACTIVO).orElseThrow(()->new IllegalStateException("Usuario inactivo"));
-   var t=tickets.save(new TicketEntity(requester,r.title(),r.description(),r.category(),r.priority(),r.site(),r.affectedAsset(),Instant.now().plus(sla(r.priority())))); return TicketResponse.of(t);
+   var t=tickets.save(new TicketEntity(requester,r.title(),r.description(),r.category(),r.priority(),r.site(),r.affectedAsset(),Instant.now().plus(sla(r.priority()))));
+   Counter.builder("helpflow.tickets.created").tag("category",r.category().name()).tag("priority",r.priority().name()).register(metrics).increment(); return TicketResponse.of(t);
  }
  @PostMapping("/{id}/assign") public TicketResponse assign(@PathVariable Long id,Authentication auth) { if(auth.getAuthorities().stream().noneMatch(a->a.getAuthority().equals("ROLE_ADMIN"))) throw new SecurityException("Solo un administrador puede asignar"); return TicketResponse.of(assignment.assign(id)); }
  @GetMapping public List<TicketResponse> mine(Authentication auth) { return tickets.findByRequesterEmail(auth.getName()).stream().map(TicketResponse::of).toList(); }

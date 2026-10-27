@@ -15,6 +15,9 @@ spring:
     enabled: true
     locations: classpath:db/migration
 management:
+  metrics:
+    tags:
+      application: ${spring.application.name}
   endpoints:
     web:
       exposure:
