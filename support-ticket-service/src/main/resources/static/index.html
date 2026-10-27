@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HelpFlow | Soporte TI</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="HelpFlow inicio"><span class="brand-mark">H</span>HelpFlow</a>
+    <div id="session-actions"><button id="show-login" class="button button-quiet">Iniciar sesión</button><button id="show-register" class="button">Crear cuenta</button></div>
+  </header>
+
+  <main>
+    <section id="welcome" class="hero">
+      <p class="eyebrow">MESA DE AYUDA</p>
+      <h1>Soporte TI claro,<br><em>sin esperas.</em></h1>
+      <p class="hero-copy">Registra y consulta solicitudes de soporte de tu equipo en un solo lugar.</p>
+      <div class="hero-actions"><button class="button" data-open="register">Crear una solicitud</button><button class="text-button" data-open="login">Ya tengo una cuenta <span>→</span></button></div>
+      <div class="benefits"><span>✓ Seguimiento de tickets</span><span>✓ SLA por prioridad</span><span>✓ Atención especializada</span></div>
+    </section>
+
+    <section id="auth-panel" class="auth-panel" aria-live="polite">
+      <div class="auth-card">
+        <button id="close-auth" class="close" aria-label="Cerrar">×</button>
+        <div id="login-form">
+          <p class="eyebrow">ACCESO</p><h2>Bienvenido de nuevo</h2><p class="muted">Ingresa para gestionar tus solicitudes.</p>
+          <form id="login">
+            <label>Correo electrónico<input name="email" type="email" autocomplete="email" required placeholder="nombre@empresa.com"></label>
+            <label>Contraseña<input name="password" type="password" autocomplete="current-password" required placeholder="••••••••"></label>
+            <button class="button wide" type="submit">Ingresar</button>
+          </form>
+          <p class="switch-copy">¿No tienes cuenta? <button class="link-button" data-open="register">Regístrate</button></p>
+        </div>
+        <div id="register-form" hidden>
+          <p class="eyebrow">REGISTRO</p><h2>Crea tu cuenta</h2><p class="muted">Luego podrás abrir y revisar tus tickets.</p>
+          <form id="register">
+            <div class="two-cols"><label>Documento<input name="document" required placeholder="1000000000"></label><label>Nombre<input name="name" required placeholder="Tu nombre"></label></div>
+            <label>Correo electrónico<input name="email" type="email" required placeholder="nombre@empresa.com"></label>
+            <div class="two-cols"><label>Sede<input name="site" required placeholder="Bogotá"></label><label>Área<input name="area" required placeholder="Operaciones"></label></div>
+            <label>Contraseña <small>(mínimo 8 caracteres)</small><input name="password" type="password" minlength="8" required placeholder="••••••••"></label>
+            <button class="button wide" type="submit">Crear cuenta</button>
+          </form>
+          <p class="switch-copy">¿Ya tienes cuenta? <button class="link-button" data-open="login">Inicia sesión</button></p>
+        </div>
+        <p id="auth-message" class="message" role="status"></p>
+      </div>
+    </section>
+
+    <section id="app" hidden class="workspace">
+      <div class="workspace-head"><div><p class="eyebrow">PORTAL DE SOPORTE</p><h1>Hola, <span id="user-email"></span></h1><p class="muted">Aquí están tus solicitudes de soporte.</p></div><button id="logout" class="button button-quiet">Cerrar sesión</button></div>
+      <div class="app-grid">
+        <section class="card request-card"><h2>Nueva solicitud</h2><p class="muted">Describe el inconveniente para crear un ticket.</p>
+          <form id="ticket-form">
+            <label>Asunto<input name="title" maxlength="150" required placeholder="Ej. No puedo conectarme a la red"></label>
+            <label>Descripción<textarea name="description" required rows="4" placeholder="Cuéntanos qué sucede y desde cuándo."></textarea></label>
+            <div class="two-cols"><label>Categoría<select name="category" required><option value="HARDWARE">Hardware</option><option value="SOFTWARE">Software</option><option value="RED">Red</option><option value="ACCESOS">Accesos</option><option value="OTRO">Otro</option></select></label><label>Prioridad<select name="priority" required><option value="BAJA">Baja</option><option value="MEDIA" selected>Media</option><option value="ALTA">Alta</option><option value="CRITICA">Crítica</option></select></label></div>
+            <div class="two-cols"><label>Sede<input name="site" required placeholder="Bogotá"></label><label>Activo afectado<input name="affectedAsset" required placeholder="Portátil / equipo"></label></div>
+            <button class="button wide" type="submit">Enviar solicitud</button><p id="ticket-message" class="message" role="status"></p>
+          </form>
+        </section>
+        <section class="card tickets-card"><div class="card-heading"><div><h2>Mis tickets</h2><p class="muted">Estado de tus solicitudes.</p></div><button id="reload" class="icon-button" title="Actualizar">↻</button></div><div id="ticket-list" class="ticket-list"><p class="empty">Cargando tickets…</p></div></section>
+      </div>
+    </section>
+  </main>
+  <footer>HelpFlow · Interfaz de demostración desarrollada con asistencia de IA e integrada para esta prueba.</footer>
+  <script src="/app.js"></script>
+</body>
+</html>

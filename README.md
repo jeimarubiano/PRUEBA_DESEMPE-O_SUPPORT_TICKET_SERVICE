@@ -76,6 +76,9 @@ Una vez iniciados los servicios:
 - PostgreSQL expuesto al host: `localhost:5433`
 - Actuator: `http://localhost:8080/actuator/health`
 - Swagger UI: `http://localhost:8080/swagger-ui.html`
+- Portal de demostración para usuarios: `http://localhost:8080/`
+
+El portal es una interfaz sencilla integrada con la API local: permite registro, inicio de sesión, creación de tickets y consulta de los tickets del usuario autenticado. Fue desarrollado con asistencia de IA e integrado y verificado como parte de la prueba; no sustituye la API ni la documentación técnica en Swagger.
 
 ## Pruebas
 
