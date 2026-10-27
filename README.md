@@ -73,6 +73,7 @@ Una vez iniciados los servicios:
 
 - API de tickets: `http://localhost:8080`
 - API de despacho: `http://localhost:8081`
+- PostgreSQL expuesto al host: `localhost:5433`
 - Actuator: `http://localhost:8080/actuator/health`
 - Swagger UI: `http://localhost:8080/swagger-ui.html`
 
