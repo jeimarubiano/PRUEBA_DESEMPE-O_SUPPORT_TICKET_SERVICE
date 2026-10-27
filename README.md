@@ -27,6 +27,8 @@ El servicio central separa adaptadores REST y JPA de los casos de uso. Las opera
 - `ROLE_TECNICO`: gestiona tickets asignados.
 - `ROLE_ADMIN`: reasigna y configura reglas operativas.
 
+Para pruebas locales se carga un técnico activo por categoría. Si necesitas habilitar la cuenta administradora `admin@helpflow.com`, define una contraseña propia antes de iniciar el servicio: `BOOTSTRAP_ADMIN_PASSWORD=tu_clave_segura`. Esa clave nunca se guarda en el repositorio.
+
 ## Endpoints principales
 
 | Método | Ruta | Descripción |
