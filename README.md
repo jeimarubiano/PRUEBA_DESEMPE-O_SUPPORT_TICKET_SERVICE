@@ -52,6 +52,8 @@ Para pruebas locales se carga un técnico activo por categoría. Si necesitas ha
 | ALTA | 8 horas |
 | CRITICA | 2 horas |
 
+Al crear un ticket se calcula el SLA y se consulta el servicio de despacho. Dentro de la misma transacción se asigna un técnico activo con especialidad compatible y con menos de cinco tickets activos, dejando un registro en el historial. Un proceso programado detecta tickets cuyo SLA venció, los marca como escalados y registra el evento.
+
 ## Ciclo de vida
 
 ```mermaid

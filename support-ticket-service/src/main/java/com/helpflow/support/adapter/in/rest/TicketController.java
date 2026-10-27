@@ -25,15 +25,16 @@ public class TicketController {
  public TicketResponse create(@Valid @RequestBody CreateTicketRequest r, Authentication auth) {
    var requester=users.findByEmail(auth.getName()).filter(u->u.getStatus()==PersonStatus.ACTIVO).orElseThrow(()->new IllegalStateException("Usuario inactivo"));
    var t=tickets.save(new TicketEntity(requester,r.title(),r.description(),r.category(),r.priority(),r.site(),r.affectedAsset(),Instant.now().plus(sla(r.priority()))));
+   assignment.assignCreatedTicket(t);
    Counter.builder("helpflow.tickets.created").tag("category",r.category().name()).tag("priority",r.priority().name()).register(metrics).increment(); return TicketResponse.of(t);
  }
  @PostMapping("/{id}/assign") public TicketResponse assign(@PathVariable Long id,Authentication auth) { if(auth.getAuthorities().stream().noneMatch(a->a.getAuthority().equals("ROLE_ADMIN"))) throw new SecurityException("Solo un administrador puede asignar"); return TicketResponse.of(assignment.assign(id)); }
  @GetMapping public List<TicketResponse> mine(Authentication auth) { return tickets.findByRequesterEmail(auth.getName()).stream().map(TicketResponse::of).toList(); }
- @PatchMapping("/{id}/status") @Transactional
+ @PatchMapping("/{id}/status")
  public TicketResponse changeStatus(@PathVariable Long id,@Valid @RequestBody ChangeStatusRequest r,Authentication auth) {
    var t=tickets.findWithRelationsById(id).orElseThrow(()->new IllegalArgumentException("Ticket no existe"));
    if(!t.getRequester().getEmail().equals(auth.getName()) && !auth.getAuthorities().stream().anyMatch(a->a.getAuthority().equals("ROLE_ADMIN")||a.getAuthority().equals("ROLE_TECNICO"))) throw new SecurityException("No autorizado");
-   t.changeStatus(r.status()); return TicketResponse.of(t);
+   return TicketResponse.of(assignment.changeStatus(id, r.status(), r.observation()));
  }
  private Duration sla(TicketPriority p) { return switch(p) { case BAJA->Duration.ofHours(72); case MEDIA->Duration.ofHours(24); case ALTA->Duration.ofHours(8); case CRITICA->Duration.ofHours(2); }; }
  public record CreateTicketRequest(@NotBlank String title,@NotBlank String description,@NotNull TicketCategory category,@NotNull TicketPriority priority,@NotBlank String site,@NotBlank String affectedAsset) {}

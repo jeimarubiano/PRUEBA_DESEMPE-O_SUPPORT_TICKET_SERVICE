@@ -26,7 +26,7 @@ La ejecución correcta muestra que Flyway aplicó las migraciones y que inició 
 1. Abre el portal y crea un usuario de prueba con correo no usado previamente.
 2. Inicia sesión con el mismo correo y contraseña.
 3. Crea un ticket, por ejemplo de categoría `RED` y prioridad `ALTA`.
-4. Comprueba que aparece en **Mis tickets**, inicialmente como `ABIERTO`, con una fecha de SLA.
+4. Comprueba que aparece en **Mis tickets** como `ASIGNADO`, con una fecha de SLA. La asignación se realiza automáticamente mediante el microservicio de despacho.
 
 Esta es la evidencia funcional más fácil de mostrar: el portal consume la API protegida con JWT. Para una nueva demostración, usa otro correo o reinicia los contenedores y la base de datos según necesites.
 
