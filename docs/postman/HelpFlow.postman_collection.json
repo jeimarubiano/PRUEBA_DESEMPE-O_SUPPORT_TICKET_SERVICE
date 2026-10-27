@@ -1,0 +1,8 @@
+{
+  "info": {"name":"HelpFlow","schema":"https://schema.getpostman.com/json/collection/v2.1.0/collection.json"},
+  "variable":[{"key":"baseUrl","value":"http://localhost:8080"}],
+  "item":[
+    {"name":"Register","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{baseUrl}}/auth/register","body":{"mode":"raw","raw":"{\n  \"document\": \"1001\",\n  \"name\": \"Usuario Demo\",\n  \"email\": \"demo@helpflow.com\",\n  \"site\": \"Bogota\",\n  \"area\": \"TI\",\n  \"password\": \"Password123\"\n}"}}},
+    {"name":"Login","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{baseUrl}}/auth/login","body":{"mode":"raw","raw":"{\"email\":\"demo@helpflow.com\",\"password\":\"Password123\"}"}}}
+  ]
+}

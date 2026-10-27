@@ -13,4 +13,5 @@ public class TicketHistoryEntity {
     @Column(nullable=false, length=1000) private String observation;
     @Column(nullable=false) private Instant changedAt;
     protected TicketHistoryEntity() { }
+    public TicketHistoryEntity(TicketEntity ticket, TicketStatus previousStatus, TicketStatus newStatus, String observation) { this.ticket=ticket;this.previousStatus=previousStatus;this.newStatus=newStatus;this.observation=observation;this.changedAt=Instant.now(); }
 }

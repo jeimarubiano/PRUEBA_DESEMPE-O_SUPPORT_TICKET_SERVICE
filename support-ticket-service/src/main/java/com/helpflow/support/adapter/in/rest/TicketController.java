@@ -12,16 +12,18 @@ import org.springframework.web.bind.annotation.*;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
+import com.helpflow.support.application.TicketAssignmentService;
 
 @RestController @RequestMapping("/tickets")
 public class TicketController {
- private final TicketRepository tickets; private final UserRepository users;
- public TicketController(TicketRepository tickets, UserRepository users) { this.tickets=tickets; this.users=users; }
+ private final TicketRepository tickets; private final UserRepository users; private final TicketAssignmentService assignment;
+ public TicketController(TicketRepository tickets, UserRepository users, TicketAssignmentService assignment) { this.tickets=tickets; this.users=users; this.assignment=assignment; }
  @PostMapping @ResponseStatus(HttpStatus.CREATED) @Transactional
  public TicketResponse create(@Valid @RequestBody CreateTicketRequest r, Authentication auth) {
    var requester=users.findByEmail(auth.getName()).filter(u->u.getStatus()==PersonStatus.ACTIVO).orElseThrow(()->new IllegalStateException("Usuario inactivo"));
    var t=tickets.save(new TicketEntity(requester,r.title(),r.description(),r.category(),r.priority(),r.site(),r.affectedAsset(),Instant.now().plus(sla(r.priority())))); return TicketResponse.of(t);
  }
+ @PostMapping("/{id}/assign") public TicketResponse assign(@PathVariable Long id,Authentication auth) { if(auth.getAuthorities().stream().noneMatch(a->a.getAuthority().equals("ROLE_ADMIN"))) throw new SecurityException("Solo un administrador puede asignar"); return TicketResponse.of(assignment.assign(id)); }
  @GetMapping public List<TicketResponse> mine(Authentication auth) { return tickets.findByRequesterEmail(auth.getName()).stream().map(TicketResponse::of).toList(); }
  @PatchMapping("/{id}/status") @Transactional
  public TicketResponse changeStatus(@PathVariable Long id,@Valid @RequestBody ChangeStatusRequest r,Authentication auth) {

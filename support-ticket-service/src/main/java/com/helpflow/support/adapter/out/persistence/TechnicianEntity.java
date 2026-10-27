@@ -16,5 +16,6 @@ public class TechnicianEntity {
     @Enumerated(EnumType.STRING) @Column(nullable=false) private PersonStatus status;
     @Enumerated(EnumType.STRING) @Column(nullable=false) private TicketCategory specialty;
     protected TechnicianEntity() { }
+    public TechnicianEntity(String document, String name, BigDecimal salary, LocalDate affiliationDate, PersonStatus status, TicketCategory specialty) { this.document=document;this.name=name;this.salary=salary;this.affiliationDate=affiliationDate;this.status=status;this.specialty=specialty; }
     public Long getId() { return id; } public PersonStatus getStatus() { return status; } public TicketCategory getSpecialty() { return specialty; }
 }

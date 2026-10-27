@@ -28,4 +28,5 @@ public class TicketEntity {
     public Instant getSlaDueAt() { return slaDueAt; } public String getTitle() { return title; }
     public UserEntity getRequester() { return requester; }
     public void changeStatus(TicketStatus next) { this.status=next; }
+    public void assign(TechnicianEntity technician) { this.technician=technician; this.status=TicketStatus.ASIGNADO; }
 }
