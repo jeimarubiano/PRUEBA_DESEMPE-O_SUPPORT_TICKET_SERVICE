@@ -15,8 +15,9 @@ import java.util.List;
 import com.helpflow.support.application.TicketAssignmentService;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
-@RestController @RequestMapping("/tickets")
+@RestController @RequestMapping("/tickets") @SecurityRequirement(name = "bearerAuth")
 public class TicketController {
  private final TicketRepository tickets; private final UserRepository users; private final TicketAssignmentService assignment; private final MeterRegistry metrics;
  public TicketController(TicketRepository tickets, UserRepository users, TicketAssignmentService assignment, MeterRegistry metrics) { this.tickets=tickets; this.users=users; this.assignment=assignment; this.metrics=metrics; }
