@@ -1,6 +1,7 @@
 FROM maven:3.9-eclipse-temurin-21 AS build
 WORKDIR /workspace
 COPY pom.xml .
+COPY support-ticket-service ./support-ticket-service
 COPY technician-dispatch-service ./technician-dispatch-service
 RUN mvn -q -pl technician-dispatch-service -am -DskipTests package
 
